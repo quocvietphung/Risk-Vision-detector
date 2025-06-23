@@ -9,7 +9,6 @@ __pycache__/
 
 .idea
 model
-static
 # Distribution / packaging
 .Python
 build/
