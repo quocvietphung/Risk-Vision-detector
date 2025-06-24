@@ -5,11 +5,14 @@ function Footer() {
       padding: "10px",
       textAlign: "center",
       fontSize: "14px",
-      marginTop: "40px",
-      borderTop: "1px solid #ddd"
+      borderTop: "1px solid #ddd",
+      position: "fixed",
+      bottom: 0,
+      left: 0,
+      width: "100%"
     }
   }
-  return <div style={styles.footer}>© 2025 - Fraud Detector App | GitHub | Contact | Docs</div>
+  return <footer style={styles.footer}>© 2025 - Fraud Detector App | GitHub | Contact | Docs</footer>
 }
 
 export default Footer
