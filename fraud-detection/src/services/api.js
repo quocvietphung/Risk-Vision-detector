@@ -1,15 +1,14 @@
+const BASE_URL = "http://127.0.0.1:5000";
+
 export async function uploadCSV(file) {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("/api/upload", {
+    const res = await fetch(`${BASE_URL}/api/upload`, {
         method: "POST",
-        body: formData
+        body: formData,
     });
 
-    if (!response.ok) {
-        throw new Error("Upload failed");
-    }
-
-    return await response.json();
+    if (!res.ok) throw new Error("Upload failed");
+    return await res.json();
 }
