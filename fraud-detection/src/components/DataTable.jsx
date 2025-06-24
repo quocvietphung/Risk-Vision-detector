@@ -3,14 +3,28 @@ function DataTable() {
     table: {
       width: "90%",
       margin: "30px auto",
-      borderCollapse: "collapse"
+      borderCollapse: "collapse",
+      borderRadius: "8px",
+      overflow: "hidden",
+      boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
     },
     thtd: {
       border: "1px solid #ddd",
-      padding: "8px"
+      padding: "12px 16px",
+      textAlign: "center",
+      fontSize: "14px"
     },
     header: {
-      backgroundColor: "#f2f2f2"
+      backgroundColor: "#2c5364",
+      color: "#ffffff",
+      fontWeight: "bold"
+    },
+    row: {
+      backgroundColor: "#ffffff",
+      transition: "background-color 0.2s ease-in-out"
+    },
+    rowHover: {
+      backgroundColor: "#f1f1f1"
     }
   }
 
@@ -24,16 +38,26 @@ function DataTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td style={styles.thtd}>123456</td>
-          <td style={styles.thtd}>€120.50</td>
-          <td style={styles.thtd}>Low</td>
-        </tr>
-        <tr>
-          <td style={styles.thtd}>123457</td>
-          <td style={styles.thtd}>€980.00</td>
-          <td style={styles.thtd}>High</td>
-        </tr>
+        {[{
+          time: "123456",
+          amount: "€120.50",
+          risk: "Low"
+        }, {
+          time: "123457",
+          amount: "€980.00",
+          risk: "High"
+        }].map((tx, index) => (
+          <tr
+            key={index}
+            style={styles.row}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = styles.rowHover.backgroundColor}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = styles.row.backgroundColor}
+          >
+            <td style={styles.thtd}>{tx.time}</td>
+            <td style={styles.thtd}>{tx.amount}</td>
+            <td style={styles.thtd}>{tx.risk}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   )

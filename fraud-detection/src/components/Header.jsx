@@ -35,9 +35,9 @@ function Header() {
       <div style={styles.logo}>🔐 Fraud Detector</div>
       <nav style={styles.nav}>
         <a href="#" style={styles.link}>Dashboard</a>
-        <a href="#" style={styles.link}>Predict</a>
-        <a href="#" style={styles.link}>History</a>
-        <a href="#" style={styles.link}>About</a>
+        {/*<a href="#" style={styles.link}>Predict</a>*/}
+        {/*<a href="#" style={styles.link}>History</a>*/}
+        {/*<a href="#" style={styles.link}>About</a>*/}
       </nav>
     </header>
   )

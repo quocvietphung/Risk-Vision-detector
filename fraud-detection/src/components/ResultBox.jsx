@@ -1,19 +1,24 @@
 function ResultBox() {
   const styles = {
     box: {
-      margin: "20px auto",
-      padding: "20px",
-      maxWidth: "500px",
-      backgroundColor: "#d4edda",
-      border: "1px solid #c3e6cb",
-      borderRadius: "5px",
-      color: "#155724"
+      margin: "30px auto",
+      padding: "24px",
+      maxWidth: "600px",
+      backgroundColor: "#e6ffed",
+      border: "1px solid #b7eb8f",
+      borderRadius: "10px",
+      color: "#237804",
+      textAlign: "center",
+      fontSize: "18px",
+      fontWeight: "500",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.05)"
     }
   }
 
   return (
     <div style={styles.box}>
-      ✅ Result: This transaction is NOT Fraudulent (Risk Score: 0.03)
+      ✅ <strong>Prediction Result:</strong> This transaction is <strong>NOT Fraudulent</strong><br />
+      🔎 <strong>Risk Score:</strong> 0.03
     </div>
   )
 }

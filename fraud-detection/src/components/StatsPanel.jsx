@@ -1,14 +1,21 @@
 function StatsPanel() {
   const styles = {
     panel: {
-      backgroundColor: "#e9ecef",
-      padding: "20px",
-      borderRadius: "8px",
-      margin: "20px auto",
-      maxWidth: "500px"
+      backgroundColor: "#ffffff",
+      padding: "30px",
+      borderRadius: "12px",
+      margin: "30px auto",
+      maxWidth: "600px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "15px"
     },
     item: {
-      margin: "10px 0"
+      fontSize: "16px",
+      fontWeight: "500",
+      color: "#333"
     }
   }
 
