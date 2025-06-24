@@ -10,6 +10,7 @@ __pycache__/
 .idea
 model
 db
+data
 # Distribution / packaging
 .Python
 build/
