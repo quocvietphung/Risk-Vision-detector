@@ -137,7 +137,8 @@ function Dashboard() {
         {stats && (
           <div style={styles.panel}>
             <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
-            <div style={styles.item}>❗ Fraudulent: {stats.fraud_count} ({stats.fraud_percentage}%)</div>
+            <div style={styles.item}>❗ Fraudulent Transactions: {stats.fraud_count}</div>
+            <div style={styles.item}>📈 Fraud Rate: {stats.fraud_percentage}%</div>
             <div style={styles.item}>💰 Total Amount: €{stats.total_amount.toLocaleString()}</div>
           </div>
         )}

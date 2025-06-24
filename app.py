@@ -2,9 +2,11 @@ from flask import Flask, send_from_directory
 from flask import request, jsonify
 from model.transaction import Transaction
 import pandas as pd
+from flask_cors import CORS
 tx_model = Transaction()
 
 app = Flask(__name__, static_folder="fraud-detection/dist", static_url_path="/")
+CORS(app)
 
 @app.route("/")
 def serve_frontend():
