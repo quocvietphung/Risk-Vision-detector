@@ -118,7 +118,12 @@ function Dashboard() {
     if (!file) return;
     try {
       const data = await uploadCSV(file);
-      setStats(data);
+      console.log("📦 Upload response:", data);
+      if (data && data.total_transactions) {
+        setStats(data);
+      } else {
+        console.warn("❗ Dữ liệu trả về không hợp lệ:", data);
+      }
     } catch (err) {
       console.error("Upload error:", err);
     }
@@ -129,15 +134,14 @@ function Dashboard() {
       <div style={styles.box}>
         <div>📁 <strong>Upload your CSV file for fraud detection</strong></div>
         <input type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
+        {stats && (
+          <div style={styles.panel}>
+            <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
+            <div style={styles.item}>❗ Fraudulent: {stats.fraud_count} ({stats.fraud_percentage}%)</div>
+            <div style={styles.item}>💰 Total Amount: €{stats.total_amount.toLocaleString()}</div>
+          </div>
+        )}
       </div>
-
-      {stats && (
-        <div style={styles.panel}>
-          <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
-          <div style={styles.item}>❗ Fraudulent: {stats.fraud_count} ({stats.fraud_percentage}%)</div>
-          <div style={styles.item}>💰 Total Amount: €{stats.total_amount.toLocaleString()}</div>
-        </div>
-      )}
 
       <div style={styles.inputBox}>
         <div style={styles.label}>🔍 Enter 30 features (comma separated):</div>
