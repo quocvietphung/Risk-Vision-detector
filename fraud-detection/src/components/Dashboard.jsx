@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { uploadCSV } from "../services/api";
+
 function Dashboard() {
   const styles = {
     panel: {
@@ -108,18 +111,33 @@ function Dashboard() {
     }
   };
 
+  const [stats, setStats] = useState(null);
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const data = await uploadCSV(file);
+      setStats(data);
+    } catch (err) {
+      console.error("Upload error:", err);
+    }
+  };
+
   return (
     <>
       <div style={styles.box}>
         <div>📁 <strong>Upload your CSV file for fraud detection</strong></div>
-        <input type="file" accept=".csv" style={styles.input} />
+        <input type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
       </div>
 
-      <div style={styles.panel}>
-        <div style={styles.item}>📊 Total Transactions: 284,807</div>
-        <div style={styles.item}>❗ Fraudulent: 492 (0.17%)</div>
-        <div style={styles.item}>💰 Total Amount: €2,345,678</div>
-      </div>
+      {stats && (
+        <div style={styles.panel}>
+          <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
+          <div style={styles.item}>❗ Fraudulent: {stats.fraud_count} ({stats.fraud_percentage}%)</div>
+          <div style={styles.item}>💰 Total Amount: €{stats.total_amount.toLocaleString()}</div>
+        </div>
+      )}
 
       <div style={styles.inputBox}>
         <div style={styles.label}>🔍 Enter 30 features (comma separated):</div>
