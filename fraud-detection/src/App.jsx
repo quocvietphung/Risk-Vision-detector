@@ -8,7 +8,7 @@ import Footer from './components/Footer'
 
 function App() {
   return (
-    <div style={{ fontFamily: "Inter, sans-serif", padding: 20 }}>
+   <div style={{ fontFamily: "Inter, sans-serif" }}>
       <Header />
       <UploadBox />
       <StatsPanel />
