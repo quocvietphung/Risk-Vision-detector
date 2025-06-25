@@ -112,28 +112,57 @@ function Dashboard() {
   };
 
   const [stats, setStats] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (file) {
+      setSelectedFile(file);
+      setStats(null);
+    }
+  };
+
+  const handleAnalyze = async () => {
+    if (!selectedFile) return;
+    setLoading(true);
     try {
-      const data = await uploadCSV(file);
-      console.log("📦 Upload response:", data);
-      if (data && data.total_transactions) {
-        setStats(data);
-      } else {
-        console.warn("❗ Dữ liệu trả về không hợp lệ:", data);
-      }
+      const data = await uploadCSV(selectedFile);
+      setStats(data);
     } catch (err) {
       console.error("Upload error:", err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    setStats(null);
+    document.getElementById("csvFileInput").value = "";
   };
 
   return (
     <>
       <div style={styles.box}>
-        <div>📁 <strong>Upload your CSV file for fraud detection</strong></div>
-        <input type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
+        <div>📁 <strong>Step 1: Upload your CSV file</strong></div>
+        <input id="csvFileInput" type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
+        {selectedFile && (
+          <>
+            <div style={{ marginTop: "10px" }}>📄 File: {selectedFile.name}</div>
+            <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button style={styles.button} onClick={handleAnalyze} disabled={loading}>
+                {loading ? "Analyzing..." : "🔍 Step 2: Analyze"}
+              </button>
+              <button
+                style={{ ...styles.button, backgroundColor: "#dc3545" }}
+                onClick={handleRemoveFile}
+              >
+                ❌ Remove File
+              </button>
+            </div>
+          </>
+        )}
         {stats && (
           <div style={styles.panel}>
             <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
