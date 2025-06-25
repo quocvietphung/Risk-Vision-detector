@@ -9,7 +9,8 @@ import {
   Container,
   Input,
   Divider,
-  Alert
+  Alert,
+  Stack
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { uploadCSV } from "../services/api";
@@ -49,62 +50,65 @@ function Dashboard() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 5 }}>
-      <Grid container spacing={4}>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Grid container spacing={5}>
         <Grid item xs={12}>
-          <Card variant="outlined">
+          <Card variant="outlined" sx={{ p: 2 }}>
             <CardContent>
-              <Typography variant="h5" gutterBottom>
-                📁 Upload CSV File
+              <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+                📁 Step 1: Upload CSV File
               </Typography>
-              <Input
-                type="file"
-                inputProps={{ accept: ".csv" }}
-                id="csvFileInput"
-                onChange={handleFileChange}
-                sx={{ mt: 2 }}
-              />
-              {selectedFile && (
-                <Alert severity="info" sx={{ mt: 2 }}>
-                  📄 Selected File: <strong>{selectedFile.name}</strong>
-                </Alert>
-              )}
-              <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={!selectedFile || loading}
-                  onClick={handleAnalyze}
-                >
-                  {loading ? "Analyzing..." : "🔍 Analyze"}
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  disabled={!selectedFile}
-                  onClick={handleRemove}
-                >
-                  ❌ Remove File
-                </Button>
-              </Box>
+              <Stack spacing={2}>
+                <Input
+                  type="file"
+                  inputProps={{ accept: ".csv" }}
+                  id="csvFileInput"
+                  onChange={handleFileChange}
+                />
+                {selectedFile && (
+                  <Alert severity="info">
+                    📄 Selected File: <strong>{selectedFile.name}</strong>
+                  </Alert>
+                )}
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={!selectedFile || loading}
+                    onClick={handleAnalyze}
+                  >
+                    {loading ? "Analyzing..." : "🔍 Analyze"}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    disabled={!selectedFile}
+                    onClick={handleRemove}
+                  >
+                    ❌ Remove File
+                  </Button>
+                </Stack>
+              </Stack>
             </CardContent>
           </Card>
         </Grid>
 
         {stats && (
           <Grid item xs={12}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{ p: 2 }}>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  📊 Analysis Result
+                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+                  📊 Step 2: Analysis Summary
                 </Typography>
-                <Divider sx={{ my: 2 }} />
-                <Typography>📄 File Name: {stats.file_name}</Typography>
-                <Typography>📊 Total Transactions: {stats.total_transactions}</Typography>
-                <Typography>❗ Actual Fraudulent Transactions: {stats.actual_fraud}</Typography>
-                <Typography>🤖 Predicted as Fraud by Model: {stats.predicted_fraud}</Typography>
-                <Typography>📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
-                <Typography>💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={1}>
+                  <Typography>📄 File Name: {stats.file_name}</Typography>
+                  <Typography>📊 Total Transactions: {stats.total_transactions}</Typography>
+                  <Typography>❗ Actual Fraudulent Transactions: {stats.actual_fraud}</Typography>
+                  <Typography>🤖 Predicted as Fraud by Model: {stats.predicted_fraud}</Typography>
+                  <Typography>📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
+                  <Typography>💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
@@ -112,19 +116,53 @@ function Dashboard() {
 
         {transactions.length > 0 && (
           <Grid item xs={12}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{ boxShadow: 4 }}>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  📋 Transaction Preview
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{ fontWeight: "bold", color: "#2c3e50" }}
+                >
+                  📋 Step 3: Transaction Preview
                 </Typography>
                 <Divider sx={{ my: 2 }} />
-                <Box sx={{ height: 400, width: "100%" }}>
+                <Box
+                  sx={{
+                    height: 440,
+                    width: "100%",
+                    "& .MuiDataGrid-root": {
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      backgroundColor: "#fefefe"
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: "#2c5364",
+                      color: "#ffffff",
+                      fontWeight: "bold",
+                      fontSize: "16px"
+                    },
+                    "& .MuiDataGrid-row": {
+                      fontSize: "14px"
+                    },
+                    "& .risk-high": {
+                      color: "#d32f2f",
+                      fontWeight: "bold"
+                    },
+                    "& .risk-low": {
+                      color: "#388e3c",
+                      fontWeight: "bold"
+                    }
+                  }}
+                >
                   <DataGrid
                     rows={transactions.map((tx, i) => ({
                       id: `${i}-${tx.time}`,
                       no: i + 1,
                       time: Number(tx.time),
-                      amount: typeof tx.amount === "number" && !isNaN(tx.amount) ? tx.amount : 0,
+                      amount:
+                        typeof tx.amount === "number" && !isNaN(tx.amount)
+                          ? tx.amount
+                          : 0,
                       risk: tx.risk
                     }))}
                     columns={[
@@ -134,7 +172,12 @@ function Dashboard() {
                         flex: 0.3,
                         sortable: false
                       },
-                      { field: "time", headerName: "Time", flex: 1, type: "number" },
+                      {
+                        field: "time",
+                        headerName: "Time",
+                        flex: 1,
+                        type: "number"
+                      },
                       {
                         field: "amount",
                         headerName: "Amount (€)",
@@ -156,20 +199,6 @@ function Dashboard() {
                     pageSize={15}
                     rowsPerPageOptions={[15]}
                     disableRowSelectionOnClick
-                    sx={{
-                      "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: "#2c5364",
-                        color: "#fff",
-                        fontWeight: "bold",
-                        borderBottom: "1px solid #ccc"
-                      },
-                      "& .risk-high": {
-                        color: "#d32f2f"
-                      },
-                      "& .risk-low": {
-                        color: "#388e3c"
-                      }
-                    }}
                   />
                 </Box>
               </CardContent>
