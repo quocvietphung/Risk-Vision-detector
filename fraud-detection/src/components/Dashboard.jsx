@@ -128,6 +128,7 @@ function Dashboard() {
   const [stats, setStats] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -143,6 +144,7 @@ function Dashboard() {
     try {
       const data = await uploadCSV(selectedFile); // API mới đã xử lý prediction
       setStats(data);
+      setTransactions(data.transactions || []);
     } catch (err) {
       console.error("Upload error:", err);
     } finally {
@@ -202,12 +204,6 @@ function Dashboard() {
         )}
       </Paper>
 
-      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>✅ Prediction Result</Typography>
-        <Typography variant="body1">This transaction is <strong>NOT Fraudulent</strong></Typography>
-        <Typography variant="body1">🔎 Risk Score: <strong>0.03</strong></Typography>
-      </Paper>
-
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h6" gutterBottom>📋 Sample Transaction Table</Typography>
         <TableContainer>
@@ -220,15 +216,7 @@ function Dashboard() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {[{
-                time: "123456",
-                amount: "€120.50",
-                risk: "Low"
-              }, {
-                time: "123457",
-                amount: "€980.00",
-                risk: "High"
-              }].map((tx, index) => (
+              {transactions.map((tx, index) => (
                 <TableRow key={index} hover>
                   <TableCell>{tx.time}</TableCell>
                   <TableCell>{tx.amount}</TableCell>
