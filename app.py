@@ -15,7 +15,6 @@ CORS(app)
 def serve_frontend():
     return send_from_directory(app.static_folder, "index.html")
 
-
 @app.route("/<path:path>")
 def serve_static(path):
     return send_from_directory(app.static_folder, path)
@@ -23,11 +22,6 @@ def serve_static(path):
 @app.route("/api/hello")
 def hello_api():
     return {"message": "Hello from Flask API!"}
-
-@app.route("/api/transactions", methods=["GET"])
-def get_transactions():
-    data = tx_model.fetch_all()
-    return jsonify(data)
 
 @app.route("/api/upload", methods=["POST"])
 def upload_csv():
