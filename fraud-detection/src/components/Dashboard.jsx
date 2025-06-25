@@ -149,7 +149,6 @@ function Dashboard() {
         <input id="csvFileInput" type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
         {selectedFile && (
           <>
-            <div style={{ marginTop: "10px" }}>📄 File: {selectedFile.name}</div>
             <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
               <button style={styles.button} onClick={handleAnalyze} disabled={loading}>
                 {loading ? "Analyzing..." : "🔍 Step 2: Analyze"}
