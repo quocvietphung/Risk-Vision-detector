@@ -8,7 +8,6 @@ __pycache__/
 *.so
 
 .idea
-model
 db
 data
 # Distribution / packaging
