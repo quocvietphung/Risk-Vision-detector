@@ -23,6 +23,56 @@ import {
 } from "@mui/material";
 import { uploadCSV } from "../services/api";
 
+const styles = {
+  container: {
+    paddingTop: 48,
+    paddingBottom: 48,
+    backgroundColor: "#f5f7fa",
+    borderRadius: 24
+  },
+  card: {
+    padding: 24,
+    backgroundColor: "#ffffff"
+  },
+  title: {
+    fontWeight: "bold",
+    marginBottom: 24,
+    color: "#1a237e"
+  },
+  button: {
+    textTransform: "none",
+    fontSize: 16,
+    paddingLeft: 24,
+    paddingRight: 24
+  },
+  alert: {
+    fontSize: 16
+  },
+  summaryTitle: {
+    fontWeight: "bold",
+    marginBottom: 16,
+    color: "#2e7d32"
+  },
+  divider: {
+    marginBottom: 16
+  },
+  tableHeader: {
+    backgroundColor: "#1a237e"
+  },
+  tableCellHead: {
+    color: "#fff",
+    fontWeight: "bold"
+  },
+  riskLow: {
+    fontWeight: "bold",
+    color: "#388e3c"
+  },
+  riskHigh: {
+    fontWeight: "bold",
+    color: "#d32f2f"
+  }
+};
+
 function Dashboard() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [stats, setStats] = useState(null);
@@ -58,19 +108,19 @@ function Dashboard() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 6, backgroundColor: "#f5f7fa", borderRadius: 3 }}>
+    <Container maxWidth="lg" style={styles.container}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
+          <Card variant="outlined" style={styles.card}>
             <CardContent>
-              <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3, color: "#1a237e" }}>
+              <Typography variant="h4" style={styles.title}>
                 📁 Upload Your Credit Card CSV File
               </Typography>
               <Stack spacing={2}>
                 <Button
                   variant="outlined"
                   component="label"
-                  sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
+                  style={styles.button}
                 >
                   📁 Choose CSV File
                   <input
@@ -82,7 +132,7 @@ function Dashboard() {
                   />
                 </Button>
                 {selectedFile && (
-                  <Alert severity="info" sx={{ fontSize: "16px" }}>
+                  <Alert severity="info" style={styles.alert}>
                     📄 <strong>{selectedFile.name}</strong> selected for analysis.
                   </Alert>
                 )}
@@ -93,7 +143,7 @@ function Dashboard() {
                       color="primary"
                       disabled={!selectedFile || loading}
                       onClick={handleAnalyze}
-                      sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
+                      style={styles.button}
                     >
                       {loading ? "Analyzing..." : "🔍 Analyze"}
                     </Button>
@@ -103,7 +153,7 @@ function Dashboard() {
                     color="secondary"
                     disabled={!selectedFile}
                     onClick={handleRemove}
-                    sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
+                    style={styles.button}
                   >
                     🔄 Reset
                   </Button>
@@ -115,12 +165,12 @@ function Dashboard() {
 
         {stats && (
           <Grid item xs={12}>
-            <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
+            <Card variant="outlined" style={styles.card}>
               <CardContent>
-                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2, color: "#2e7d32" }}>
+                <Typography variant="h5" style={styles.summaryTitle}>
                   📊 Analysis Summary
                 </Typography>
-                <Divider sx={{ mb: 2 }} />
+                <Divider style={styles.divider} />
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <Typography variant="body1">📄 File Name: <strong>{stats.file_name}</strong></Typography>
@@ -140,20 +190,20 @@ function Dashboard() {
 
         {transactions.length > 0 && (
           <Grid item xs={12}>
-            <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
+            <Card variant="outlined" style={styles.card}>
               <CardContent>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#1a237e" }}>
+                <Typography variant="h5" gutterBottom style={styles.title}>
                   📋 Transaction Preview (Top 10)
                 </Typography>
-                <Divider sx={{ my: 2 }} />
-                <TableContainer component={Paper} sx={{ maxHeight: 500, overflowX: "auto" }}>
+                <Divider style={{ marginTop: 16, marginBottom: 16 }} />
+                <TableContainer component={Paper} style={{ maxHeight: 500, overflowX: "auto" }}>
                   <Table stickyHeader size="small">
                     <TableHead>
-                      <TableRow sx={{ backgroundColor: "#1a237e" }}>
-                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>No.</TableCell>
-                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Time</TableCell>
-                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Amount (€)</TableCell>
-                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Risk</TableCell>
+                      <TableRow style={styles.tableHeader}>
+                        <TableCell style={styles.tableCellHead}>No.</TableCell>
+                        <TableCell style={styles.tableCellHead}>Time</TableCell>
+                        <TableCell style={styles.tableCellHead}>Amount (€)</TableCell>
+                        <TableCell style={styles.tableCellHead}>Risk</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -163,10 +213,9 @@ function Dashboard() {
                           <TableCell>{Number(tx.time)}</TableCell>
                           <TableCell>{`€${Number(tx.amount || 0).toFixed(2)}`}</TableCell>
                           <TableCell
-                            sx={{
-                              fontWeight: "bold",
-                              color: tx.risk === "High" ? "#d32f2f" : "#388e3c"
-                            }}
+                            style={
+                              tx.risk === "High" ? styles.riskHigh : styles.riskLow
+                            }
                           >
                             {tx.risk}
                           </TableCell>
