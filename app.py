@@ -1,6 +1,6 @@
 from flask import Flask, send_from_directory
 from flask import request, jsonify
-from model.transaction import Transaction
+from model.uploads import Transaction
 import pandas as pd
 from flask_cors import CORS
 tx_model = Transaction()

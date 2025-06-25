@@ -12,11 +12,10 @@ class DatabaseInitializer:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
 
-        # Drop old tables
-        cursor.execute("DROP TABLE IF EXISTS transactions;")
+        # Drop old uploads table
         cursor.execute("DROP TABLE IF EXISTS uploads;")
 
-        # Create uploads table
+        # Create uploads table only
         cursor.execute("""
             CREATE TABLE uploads (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,21 +26,6 @@ class DatabaseInitializer:
                 fraud_percentage REAL,
                 total_amount REAL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-
-        # Create transactions table with foreign key
-        cursor.execute("""
-            CREATE TABLE transactions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                upload_id INTEGER,
-                time INTEGER,
-                amount REAL,
-                risk TEXT,
-                is_fraud INTEGER,
-                predicted_score REAL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (upload_id) REFERENCES uploads(id)
             );
         """)
 
