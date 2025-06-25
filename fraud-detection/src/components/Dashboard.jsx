@@ -25,6 +25,7 @@ import { uploadCSV } from "../services/api";
 
 const styles = {
   container: {
+    marginTop: 20,
     paddingTop: 48,
     paddingBottom: 48,
     backgroundColor: "#f5f7fa",
