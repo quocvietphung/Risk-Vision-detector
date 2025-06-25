@@ -6,14 +6,9 @@ import {
   Container,
   Typography,
   Paper,
-  TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
+  TextField
 } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 function Dashboard() {
   const styles = {
@@ -228,28 +223,29 @@ function Dashboard() {
         )}
       </Paper>
 
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h6" gutterBottom>📋 Sample Transaction Table</Typography>
-        <TableContainer>
-          <Table>
-            <TableHead sx={{ backgroundColor: "#2c5364" }}>
-              <TableRow>
-                <TableCell sx={{ color: "#fff" }}>Time</TableCell>
-                <TableCell sx={{ color: "#fff" }}>Amount</TableCell>
-                <TableCell sx={{ color: "#fff" }}>Risk</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {transactions.map((tx, index) => (
-                <TableRow key={index} hover>
-                  <TableCell>{tx.time}</TableCell>
-                  <TableCell>{tx.amount}</TableCell>
-                  <TableCell>{tx.risk}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <Paper elevation={3} sx={{ p: 4, height: 500 }}>
+        <Typography variant="h6" gutterBottom>📊 Transaction Preview</Typography>
+        <DataGrid
+          rows={transactions.map((tx, i) => ({ id: i, ...tx }))}
+          columns={[
+            { field: "time", headerName: "Time", flex: 1 },
+            { field: "amount", headerName: "Amount (€)", flex: 1, type: "number" },
+            { field: "risk", headerName: "Risk", flex: 1 }
+          ]}
+          pageSize={15}
+          rowsPerPageOptions={[15]}
+          disableRowSelectionOnClick
+          sx={{
+            mt: 2,
+            backgroundColor: "#fff",
+            borderRadius: 2,
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "#2c5364",
+              color: "#fff",
+              fontWeight: "bold"
+            }
+          }}
+        />
       </Paper>
     </Container>
   );
