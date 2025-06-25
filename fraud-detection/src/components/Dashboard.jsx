@@ -58,13 +58,13 @@ function Dashboard() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Grid container spacing={5}>
+    <Container maxWidth="lg" sx={{ py: 6, backgroundColor: "#f5f7fa", borderRadius: 3 }}>
+      <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Card variant="outlined" sx={{ p: 2 }}>
+          <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
-                📁 Step 1: Upload CSV File
+              <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3, color: "#1a237e" }}>
+                📁 Upload Your Credit Card CSV File
               </Typography>
               <Stack spacing={2}>
                 <Input
@@ -74,8 +74,8 @@ function Dashboard() {
                   onChange={handleFileChange}
                 />
                 {selectedFile && (
-                  <Alert severity="info">
-                    📄 Selected File: <strong>{selectedFile.name}</strong>
+                  <Alert severity="info" sx={{ fontSize: "16px" }}>
+                    📄 <strong>{selectedFile.name}</strong> selected for analysis.
                   </Alert>
                 )}
                 <Stack direction="row" spacing={2}>
@@ -84,6 +84,7 @@ function Dashboard() {
                     color="primary"
                     disabled={!selectedFile || loading}
                     onClick={handleAnalyze}
+                    sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
                   >
                     {loading ? "Analyzing..." : "🔍 Analyze"}
                   </Button>
@@ -92,8 +93,9 @@ function Dashboard() {
                     color="secondary"
                     disabled={!selectedFile}
                     onClick={handleRemove}
+                    sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
                   >
-                    ❌ Remove File
+                    ❌ Remove
                   </Button>
                 </Stack>
               </Stack>
@@ -103,20 +105,24 @@ function Dashboard() {
 
         {stats && (
           <Grid item xs={12}>
-            <Card variant="outlined" sx={{ p: 2 }}>
+            <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
               <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-                  📊 Step 2: Analysis Summary
+                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2, color: "#2e7d32" }}>
+                  📊 Analysis Summary
                 </Typography>
                 <Divider sx={{ mb: 2 }} />
-                <Stack spacing={1}>
-                  <Typography>📄 File Name: {stats.file_name}</Typography>
-                  <Typography>📊 Total Transactions: {stats.total_transactions}</Typography>
-                  <Typography>❗ Actual Fraudulent Transactions: {stats.actual_fraud}</Typography>
-                  <Typography>🤖 Predicted as Fraud by Model: {stats.predicted_fraud}</Typography>
-                  <Typography>📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
-                  <Typography>💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
-                </Stack>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body1">📄 File Name: <strong>{stats.file_name}</strong></Typography>
+                    <Typography variant="body1">📊 Total Transactions: {stats.total_transactions}</Typography>
+                    <Typography variant="body1">💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body1">❗ Actual Fraudulent: {stats.actual_fraud}</Typography>
+                    <Typography variant="body1">🤖 Predicted Fraud: {stats.predicted_fraud}</Typography>
+                    <Typography variant="body1">📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
@@ -124,20 +130,16 @@ function Dashboard() {
 
         {transactions.length > 0 && (
           <Grid item xs={12}>
-            <Card variant="outlined" sx={{ boxShadow: 4 }}>
+            <Card variant="outlined" sx={{ p: 3, backgroundColor: "#ffffff" }}>
               <CardContent>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ fontWeight: "bold", color: "#2c3e50" }}
-                >
-                  📋 Step 3: Transaction Preview
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#1a237e" }}>
+                  📋 Transaction Preview (Top 10)
                 </Typography>
                 <Divider sx={{ my: 2 }} />
-                <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-                  <Table stickyHeader>
+                <TableContainer component={Paper} sx={{ maxHeight: 500, overflowX: "auto" }}>
+                  <Table stickyHeader size="small">
                     <TableHead>
-                      <TableRow sx={{ backgroundColor: "#2c5364" }}>
+                      <TableRow sx={{ backgroundColor: "#1a237e" }}>
                         <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>No.</TableCell>
                         <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Time</TableCell>
                         <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Amount (€)</TableCell>
