@@ -12,7 +12,15 @@ import {
   Alert,
   Stack
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+  Paper
+} from "@mui/material";
 import { uploadCSV } from "../services/api";
 
 function Dashboard() {
@@ -126,81 +134,35 @@ function Dashboard() {
                   📋 Step 3: Transaction Preview
                 </Typography>
                 <Divider sx={{ my: 2 }} />
-                <Box
-                  sx={{
-                    height: 440,
-                    width: "100%",
-                    "& .MuiDataGrid-root": {
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      backgroundColor: "#fefefe"
-                    },
-                    "& .MuiDataGrid-columnHeaders": {
-                      backgroundColor: "#2c5364",
-                      color: "#ffffff",
-                      fontWeight: "bold",
-                      fontSize: "16px"
-                    },
-                    "& .MuiDataGrid-row": {
-                      fontSize: "14px"
-                    },
-                    "& .risk-high": {
-                      color: "#d32f2f",
-                      fontWeight: "bold"
-                    },
-                    "& .risk-low": {
-                      color: "#388e3c",
-                      fontWeight: "bold"
-                    }
-                  }}
-                >
-                  <DataGrid
-                    rows={transactions.map((tx, i) => ({
-                      id: `${i}-${tx.time}`,
-                      no: i + 1,
-                      time: Number(tx.time),
-                      amount:
-                        typeof tx.amount === "number" && !isNaN(tx.amount)
-                          ? tx.amount
-                          : 0,
-                      risk: tx.risk
-                    }))}
-                    columns={[
-                      {
-                        field: "no",
-                        headerName: "#",
-                        flex: 0.3,
-                        sortable: false
-                      },
-                      {
-                        field: "time",
-                        headerName: "Time",
-                        flex: 1,
-                        type: "number"
-                      },
-                      {
-                        field: "amount",
-                        headerName: "Amount (€)",
-                        flex: 1,
-                        type: "number",
-                        valueFormatter: (params) =>
-                          typeof params.value === "number" && !isNaN(params.value)
-                            ? `€${params.value.toFixed(2)}`
-                            : "€0.00"
-                      },
-                      {
-                        field: "risk",
-                        headerName: "Risk",
-                        flex: 1,
-                        cellClassName: (params) =>
-                          params.value === "High" ? "risk-high" : "risk-low"
-                      }
-                    ]}
-                    pageSize={15}
-                    rowsPerPageOptions={[15]}
-                    disableRowSelectionOnClick
-                  />
-                </Box>
+                <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+                  <Table stickyHeader>
+                    <TableHead>
+                      <TableRow sx={{ backgroundColor: "#2c5364" }}>
+                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>No.</TableCell>
+                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Time</TableCell>
+                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Amount (€)</TableCell>
+                        <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Risk</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {transactions.map((tx, i) => (
+                        <TableRow key={`${i}-${tx.time}`}>
+                          <TableCell>{i + 1}</TableCell>
+                          <TableCell>{Number(tx.time)}</TableCell>
+                          <TableCell>{`€${Number(tx.amount || 0).toFixed(2)}`}</TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: "bold",
+                              color: tx.risk === "High" ? "#d32f2f" : "#388e3c"
+                            }}
+                          >
+                            {tx.risk}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </CardContent>
             </Card>
           </Grid>
