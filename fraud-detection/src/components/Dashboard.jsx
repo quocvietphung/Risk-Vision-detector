@@ -143,7 +143,10 @@ function Dashboard() {
     setLoading(true);
     try {
       const data = await uploadCSV(selectedFile); // API mới đã xử lý prediction
-      setStats(data);
+      setStats({
+        ...data,
+        file_name: selectedFile.name
+      });
       setTransactions(data.transactions || []);
     } catch (err) {
       console.error("Upload error:", err);
@@ -175,6 +178,11 @@ function Dashboard() {
           </Button>
         </label>
         {selectedFile && (
+          <Typography variant="subtitle2" mt={1}>
+            📄 Selected File: {selectedFile.name}
+          </Typography>
+        )}
+        {selectedFile && (
           <Box mt={2} display="flex" gap={2} justifyContent="center">
             <Button
               variant="contained"
@@ -195,6 +203,7 @@ function Dashboard() {
         )}
         {stats && (
           <Box mt={4} textAlign="center">
+            <Typography variant="subtitle1">📄 File Name: {stats.file_name}</Typography>
             <Typography variant="subtitle1">📊 Total Transactions: {stats.total_transactions}</Typography>
             <Typography variant="subtitle1">❗ Actual Fraudulent Transactions: {stats.actual_fraud}</Typography>
             <Typography variant="subtitle1">🤖 Predicted as Fraud by Model: {stats.predicted_fraud}</Typography>
