@@ -178,9 +178,24 @@ function Dashboard() {
           </Button>
         </label>
         {selectedFile && (
-          <Typography variant="subtitle2" mt={1}>
-            📄 Selected File: {selectedFile.name}
-          </Typography>
+          <Box
+            mt={2}
+            p={2}
+            sx={{
+              backgroundColor: "#f0f4f8",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              fontSize: "16px",
+              fontWeight: 500,
+              color: "#333"
+            }}
+          >
+            <span role="img" aria-label="file">📄</span> Selected File: {selectedFile.name}
+          </Box>
         )}
         {selectedFile && (
           <Box mt={2} display="flex" gap={2} justifyContent="center">
