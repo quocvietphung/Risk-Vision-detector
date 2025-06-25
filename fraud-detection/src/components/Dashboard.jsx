@@ -141,7 +141,7 @@ function Dashboard() {
     if (!selectedFile) return;
     setLoading(true);
     try {
-      const data = await uploadCSV(selectedFile);
+      const data = await uploadCSV(selectedFile); // API mới đã xử lý prediction
       setStats(data);
     } catch (err) {
       console.error("Upload error:", err);
@@ -194,29 +194,12 @@ function Dashboard() {
         {stats && (
           <Box mt={4} textAlign="center">
             <Typography variant="subtitle1">📊 Total Transactions: {stats.total_transactions}</Typography>
-            <Typography variant="subtitle1">❗ Fraudulent Transactions: {stats.fraud_count}</Typography>
+            <Typography variant="subtitle1">❗ Actual Fraudulent Transactions: {stats.actual_fraud}</Typography>
+            <Typography variant="subtitle1">🤖 Predicted as Fraud by Model: {stats.predicted_fraud}</Typography>
             <Typography variant="subtitle1">📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
             <Typography variant="subtitle1">💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
           </Box>
         )}
-      </Paper>
-
-      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>🔍 Enter 30 features (comma separated):</Typography>
-        <TextField
-          fullWidth
-          placeholder="0.1, 0.3, 1.2, ..."
-          variant="outlined"
-          size="small"
-          sx={{ mt: 2 }}
-        />
-        <Button
-          variant="contained"
-          color="success"
-          sx={{ mt: 3 }}
-        >
-          Predict Fraud
-        </Button>
       </Paper>
 
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
