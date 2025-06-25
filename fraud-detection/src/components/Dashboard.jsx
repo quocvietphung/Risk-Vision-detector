@@ -122,16 +122,54 @@ function Dashboard() {
                 Upload your dataset and discover fraudulent patterns instantly.
               </Typography>
               <Stack spacing={2}>
-                <label htmlFor="csvFileInput" style={{ display: "inline-block", padding: "12px 24px", backgroundColor: "#1e88e5", color: "#fff", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
-                  📁 Select CSV File
-                  <input
-                    type="file"
-                    hidden
-                    accept=".csv"
-                    id="csvFileInput"
-                    onChange={handleFileChange}
-                  />
-                </label>
+                {!selectedFile && (
+                  <Box
+                    sx={{
+                      border: "2px dashed #90caf9",
+                      padding: "36px",
+                      borderRadius: "16px",
+                      textAlign: "center",
+                      backgroundColor: "#e3f2fd",
+                      position: "relative",
+                      cursor: "pointer",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        backgroundColor: "#bbdefb",
+                        boxShadow: "0 0 10px rgba(0,0,0,0.1)"
+                      }
+                    }}
+                    onClick={() => document.getElementById("csvFileInput").click()}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"
+                      }}
+                    >
+                      <img
+                        src="https://img.icons8.com/ios-filled/100/000000/upload-to-cloud.png"
+                        alt="Upload"
+                        width={64}
+                        height={64}
+                        style={{ marginBottom: 16, opacity: 0.8 }}
+                      />
+                      <Typography variant="h6" sx={{ fontWeight: 600, color: "#0d47a1" }}>
+                        Drag & Drop your CSV file here
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#546e7a", mt: 1 }}>
+                        or click to browse
+                      </Typography>
+                      <input
+                        type="file"
+                        accept=".csv"
+                        hidden
+                        id="csvFileInput"
+                        onChange={handleFileChange}
+                      />
+                    </Box>
+                  </Box>
+                )}
                 {selectedFile && (
                   <Alert severity="info" style={styles.alert}>
                     📄 <strong>{selectedFile.name}</strong> selected for analysis.
