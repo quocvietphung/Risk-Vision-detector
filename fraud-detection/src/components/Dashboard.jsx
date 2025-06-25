@@ -1,6 +1,19 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { uploadCSV } from "../services/api";
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@mui/material";
 
 function Dashboard() {
   const styles = {
@@ -144,9 +157,9 @@ function Dashboard() {
   };
 
   return (
-    <>
-      <div style={styles.box}>
-        <div>📁 <strong>Step 1: Upload your CSV file</strong></div>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+        <Typography variant="h6" gutterBottom>📁 Step 1: Upload your CSV file</Typography>
         <input
           id="csvFileInput"
           type="file"
@@ -155,91 +168,95 @@ function Dashboard() {
           style={{ display: "none" }}
         />
         <label htmlFor="csvFileInput">
-          <Button variant="outlined" component="span" sx={{ mt: 2 }}>
+          <Button variant="outlined" component="span" sx={{ mt: 1 }}>
             📁 Choose CSV File
           </Button>
         </label>
         {selectedFile && (
-          <>
-            <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
-              <Button
-                variant="contained"
-                color="success"
-                onClick={handleAnalyze}
-                disabled={loading}
-              >
-                {loading ? "Analyzing..." : "🔍 Step 2: Analyze"}
-              </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={handleRemoveFile}
-              >
-                ❌ Remove File
-              </Button>
-            </div>
-          </>
+          <Box mt={2} display="flex" gap={2} justifyContent="center">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleAnalyze}
+              disabled={loading}
+            >
+              {loading ? "Analyzing..." : "🔍 Step 2: Analyze"}
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleRemoveFile}
+            >
+              ❌ Remove File
+            </Button>
+          </Box>
         )}
         {stats && (
-          <div style={styles.panel}>
-            <div style={styles.item}>📊 Total Transactions: {stats.total_transactions}</div>
-            <div style={styles.item}>❗ Fraudulent Transactions: {stats.fraud_count}</div>
-            <div style={styles.item}>📈 Fraud Rate: {stats.fraud_percentage}%</div>
-            <div style={styles.item}>💰 Total Amount: €{stats.total_amount.toLocaleString()}</div>
-          </div>
+          <Box mt={4} textAlign="center">
+            <Typography variant="subtitle1">📊 Total Transactions: {stats.total_transactions}</Typography>
+            <Typography variant="subtitle1">❗ Fraudulent Transactions: {stats.fraud_count}</Typography>
+            <Typography variant="subtitle1">📈 Fraud Rate: {stats.fraud_percentage}%</Typography>
+            <Typography variant="subtitle1">💰 Total Amount: €{stats.total_amount.toLocaleString()}</Typography>
+          </Box>
         )}
-      </div>
+      </Paper>
 
-      <div style={styles.inputBox}>
-        <div style={styles.label}>🔍 Enter 30 features (comma separated):</div>
-        <input type="text" style={styles.predictInput} placeholder="0.1, 0.3, 1.2, ..." />
-        <br />
+      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+        <Typography variant="h6" gutterBottom>🔍 Enter 30 features (comma separated):</Typography>
+        <TextField
+          fullWidth
+          placeholder="0.1, 0.3, 1.2, ..."
+          variant="outlined"
+          size="small"
+          sx={{ mt: 2 }}
+        />
         <Button
           variant="contained"
           color="success"
-          sx={{ mt: 2 }}
+          sx={{ mt: 3 }}
         >
           Predict Fraud
         </Button>
-      </div>
+      </Paper>
 
-      <div style={styles.resultBox}>
-        ✅ <strong>Prediction Result:</strong> This transaction is <strong>NOT Fraudulent</strong><br />
-        🔎 <strong>Risk Score:</strong> 0.03
-      </div>
+      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+        <Typography variant="h6" gutterBottom>✅ Prediction Result</Typography>
+        <Typography variant="body1">This transaction is <strong>NOT Fraudulent</strong></Typography>
+        <Typography variant="body1">🔎 Risk Score: <strong>0.03</strong></Typography>
+      </Paper>
 
-      <table style={styles.table}>
-        <thead style={styles.header}>
-          <tr>
-            <th style={styles.thtd}>Time</th>
-            <th style={styles.thtd}>Amount</th>
-            <th style={styles.thtd}>Risk</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[{
-            time: "123456",
-            amount: "€120.50",
-            risk: "Low"
-          }, {
-            time: "123457",
-            amount: "€980.00",
-            risk: "High"
-          }].map((tx, index) => (
-            <tr
-              key={index}
-              style={styles.row}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = styles.rowHover.backgroundColor}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = styles.row.backgroundColor}
-            >
-              <td style={styles.thtd}>{tx.time}</td>
-              <td style={styles.thtd}>{tx.amount}</td>
-              <td style={styles.thtd}>{tx.risk}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h6" gutterBottom>📋 Sample Transaction Table</Typography>
+        <TableContainer>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#2c5364" }}>
+              <TableRow>
+                <TableCell sx={{ color: "#fff" }}>Time</TableCell>
+                <TableCell sx={{ color: "#fff" }}>Amount</TableCell>
+                <TableCell sx={{ color: "#fff" }}>Risk</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[{
+                time: "123456",
+                amount: "€120.50",
+                risk: "Low"
+              }, {
+                time: "123457",
+                amount: "€980.00",
+                risk: "High"
+              }].map((tx, index) => (
+                <TableRow key={index} hover>
+                  <TableCell>{tx.time}</TableCell>
+                  <TableCell>{tx.amount}</TableCell>
+                  <TableCell>{tx.risk}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Container>
   );
 }
 
