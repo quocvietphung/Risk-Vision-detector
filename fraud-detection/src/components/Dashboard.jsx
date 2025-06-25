@@ -67,27 +67,37 @@ function Dashboard() {
                 📁 Upload Your Credit Card CSV File
               </Typography>
               <Stack spacing={2}>
-                <Input
-                  type="file"
-                  inputProps={{ accept: ".csv" }}
-                  id="csvFileInput"
-                  onChange={handleFileChange}
-                />
+                <Button
+                  variant="outlined"
+                  component="label"
+                  sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
+                >
+                  📁 Choose CSV File
+                  <input
+                    type="file"
+                    hidden
+                    accept=".csv"
+                    id="csvFileInput"
+                    onChange={handleFileChange}
+                  />
+                </Button>
                 {selectedFile && (
                   <Alert severity="info" sx={{ fontSize: "16px" }}>
                     📄 <strong>{selectedFile.name}</strong> selected for analysis.
                   </Alert>
                 )}
                 <Stack direction="row" spacing={2}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={!selectedFile || loading}
-                    onClick={handleAnalyze}
-                    sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
-                  >
-                    {loading ? "Analyzing..." : "🔍 Analyze"}
-                  </Button>
+                  {!stats && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={!selectedFile || loading}
+                      onClick={handleAnalyze}
+                      sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
+                    >
+                      {loading ? "Analyzing..." : "🔍 Analyze"}
+                    </Button>
+                  )}
                   <Button
                     variant="outlined"
                     color="secondary"
@@ -95,7 +105,7 @@ function Dashboard() {
                     onClick={handleRemove}
                     sx={{ textTransform: "none", fontSize: "16px", px: 3 }}
                   >
-                    ❌ Remove
+                    🔄 Reset
                   </Button>
                 </Stack>
               </Stack>
