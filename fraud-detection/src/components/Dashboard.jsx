@@ -29,7 +29,8 @@ const styles = {
     paddingTop: 48,
     paddingBottom: 48,
     backgroundColor: "#f5f7fa",
-    borderRadius: 24
+    borderRadius: 24,
+    boxShadow: "0 0 40px rgba(0,0,0,0.04)"
   },
   card: {
     padding: 24,
@@ -114,16 +115,15 @@ function Dashboard() {
         <Grid item xs={12}>
           <Card variant="outlined" style={styles.card}>
             <CardContent>
-              <Typography variant="h4" style={styles.title}>
-                📁 Upload Your Credit Card CSV File
+              <Typography variant="h3" style={{ fontWeight: 700, marginBottom: 16, color: "#0d47a1" }}>
+                💳 Credit Card Fraud Detector
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: 24, color: "#546e7a" }}>
+                Upload your dataset and discover fraudulent patterns instantly.
               </Typography>
               <Stack spacing={2}>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  style={styles.button}
-                >
-                  📁 Choose CSV File
+                <label htmlFor="csvFileInput" style={{ display: "inline-block", padding: "12px 24px", backgroundColor: "#1e88e5", color: "#fff", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
+                  📁 Select CSV File
                   <input
                     type="file"
                     hidden
@@ -131,34 +131,34 @@ function Dashboard() {
                     id="csvFileInput"
                     onChange={handleFileChange}
                   />
-                </Button>
+                </label>
                 {selectedFile && (
                   <Alert severity="info" style={styles.alert}>
                     📄 <strong>{selectedFile.name}</strong> selected for analysis.
                   </Alert>
                 )}
-                <Stack direction="row" spacing={2}>
+                <Box display="flex" gap={2} flexWrap="wrap" mt={2}>
                   {!stats && (
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="success"
                       disabled={!selectedFile || loading}
                       onClick={handleAnalyze}
-                      style={styles.button}
+                      style={{ fontWeight: 600, padding: "12px 24px" }}
                     >
-                      {loading ? "Analyzing..." : "🔍 Analyze"}
+                      {loading ? "🔎 Analyzing..." : "🔎 Start Analysis"}
                     </Button>
                   )}
                   <Button
                     variant="outlined"
-                    color="secondary"
+                    color="error"
                     disabled={!selectedFile}
                     onClick={handleRemove}
-                    style={styles.button}
+                    style={{ fontWeight: 600, padding: "12px 24px" }}
                   >
-                    🔄 Reset
+                    ♻️ Reset Upload
                   </Button>
-                </Stack>
+                </Box>
               </Stack>
             </CardContent>
           </Card>
@@ -168,7 +168,7 @@ function Dashboard() {
           <Grid item xs={12}>
             <Card variant="outlined" style={styles.card}>
               <CardContent>
-                <Typography variant="h5" style={styles.summaryTitle}>
+                <Typography variant="h4" style={{ fontWeight: 700, marginBottom: 16, color: "#2e7d32" }}>
                   📊 Analysis Summary
                 </Typography>
                 <Divider style={styles.divider} />
@@ -193,11 +193,11 @@ function Dashboard() {
           <Grid item xs={12}>
             <Card variant="outlined" style={styles.card}>
               <CardContent>
-                <Typography variant="h5" gutterBottom style={styles.title}>
-                  📋 Transaction Preview (Top 10)
+                <Typography variant="h4" gutterBottom style={{ fontWeight: 700, color: "#1565c0" }}>
+                  📋 Transaction Preview
                 </Typography>
                 <Divider style={{ marginTop: 16, marginBottom: 16 }} />
-                <TableContainer component={Paper} style={{ maxHeight: 500, overflowX: "auto" }}>
+                <TableContainer component={Paper} style={{ maxHeight: 500, borderRadius: 12, overflowX: "auto", border: "1px solid #e0e0e0" }}>
                   <Table stickyHeader size="small">
                     <TableHead>
                       <TableRow style={styles.tableHeader}>
@@ -218,7 +218,7 @@ function Dashboard() {
                               tx.risk === "High" ? styles.riskHigh : styles.riskLow
                             }
                           >
-                            {tx.risk}
+                            {tx.risk === "High" ? "⚠️ High" : "✅ Low"}
                           </TableCell>
                         </TableRow>
                       ))}
