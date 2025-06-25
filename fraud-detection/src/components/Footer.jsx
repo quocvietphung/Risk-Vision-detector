@@ -1,16 +1,21 @@
 import { Box, Typography, Link } from "@mui/material";
 
 function Footer() {
+  const styles = {
+    backgroundColor: "#f8f9fa",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    borderTopColor: "#ddd",
+    marginTop: 64,
+    paddingTop: 16,
+    paddingBottom: 16,
+    textAlign: "center"
+  };
+
   return (
     <Box
       component="footer"
-      sx={{
-        backgroundColor: "#f8f9fa",
-        borderTop: "1px solid #ddd",
-        mt: 8,
-        py: 2,
-        textAlign: "center"
-      }}
+      style={styles}
     >
       <Typography variant="body2" color="text.secondary">
         © 2025 - Fraud Detector App &nbsp;|&nbsp;
