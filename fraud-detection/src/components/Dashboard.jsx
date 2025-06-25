@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { uploadCSV } from "../services/api";
 
@@ -146,19 +147,36 @@ function Dashboard() {
     <>
       <div style={styles.box}>
         <div>📁 <strong>Step 1: Upload your CSV file</strong></div>
-        <input id="csvFileInput" type="file" accept=".csv" style={styles.input} onChange={handleFileUpload} />
+        <input
+          id="csvFileInput"
+          type="file"
+          accept=".csv"
+          onChange={handleFileUpload}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="csvFileInput">
+          <Button variant="outlined" component="span" sx={{ mt: 2 }}>
+            📁 Choose CSV File
+          </Button>
+        </label>
         {selectedFile && (
           <>
             <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
-              <button style={styles.button} onClick={handleAnalyze} disabled={loading}>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleAnalyze}
+                disabled={loading}
+              >
                 {loading ? "Analyzing..." : "🔍 Step 2: Analyze"}
-              </button>
-              <button
-                style={{ ...styles.button, backgroundColor: "#dc3545" }}
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
                 onClick={handleRemoveFile}
               >
                 ❌ Remove File
-              </button>
+              </Button>
             </div>
           </>
         )}
@@ -176,13 +194,13 @@ function Dashboard() {
         <div style={styles.label}>🔍 Enter 30 features (comma separated):</div>
         <input type="text" style={styles.predictInput} placeholder="0.1, 0.3, 1.2, ..." />
         <br />
-        <button
-          style={styles.button}
-          onMouseOver={e => e.currentTarget.style.backgroundColor = "#218838"}
-          onMouseOut={e => e.currentTarget.style.backgroundColor = "#28a745"}
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ mt: 2 }}
         >
           Predict Fraud
-        </button>
+        </Button>
       </div>
 
       <div style={styles.resultBox}>
