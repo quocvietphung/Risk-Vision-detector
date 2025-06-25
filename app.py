@@ -1,9 +1,9 @@
 from flask import Flask, send_from_directory
 from flask import request, jsonify
-from model.uploads import Transaction
+from model.uploads import Upload
 import pandas as pd
 from flask_cors import CORS
-tx_model = Transaction()
+tx_model = Upload()
 
 app = Flask(__name__, static_folder="fraud-detection/dist", static_url_path="/")
 CORS(app)
@@ -38,8 +38,17 @@ def upload_csv():
     fraud_percent = round((actual_fraud / total) * 100, 2)
     total_amount = round(df["Amount"].sum(), 2)
 
-    tx_model.insert_upload_stats(filename, total, actual_fraud, predicted_fraud, fraud_percent, total_amount)
+    # Only store upload stats (no individual transactions)
+    tx_model.insert_upload_stats(
+        file_name=filename,
+        total_transactions=total,
+        actual_fraud=actual_fraud,
+        predicted_fraud=predicted_fraud,
+        fraud_percentage=fraud_percent,
+        total_amount=total_amount
+    )
 
+    # Sample preview
     sample = df.head(10).copy()
     sample["risk"] = sample["Class"].apply(lambda x: "High" if x == 1 else "Low")
     transactions = sample[["Time", "Amount", "risk"]].rename(columns={"Time": "time", "Amount": "amount"}).to_dict(orient="records")
@@ -51,7 +60,7 @@ def upload_csv():
         "predicted_fraud": predicted_fraud,
         "fraud_percentage": fraud_percent,
         "total_amount": total_amount,
-        "transactions": transactions
+        "transactions": transactions  # frontend preview only
     })
 
 

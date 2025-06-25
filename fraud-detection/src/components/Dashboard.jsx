@@ -120,16 +120,30 @@ function Dashboard() {
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ height: 400, width: "100%" }}>
                   <DataGrid
-                    rows={transactions.map((tx, i) => ({ id: i, ...tx }))}
+                    rows={transactions.map((tx, i) => ({
+                      id: `${i}-${tx.time}`,
+                      no: i + 1,
+                      time: Number(tx.time),
+                      amount: typeof tx.amount === "number" && !isNaN(tx.amount) ? tx.amount : 0,
+                      risk: tx.risk
+                    }))}
                     columns={[
-                      { field: "time", headerName: "Time", flex: 1 },
+                      {
+                        field: "no",
+                        headerName: "#",
+                        flex: 0.3,
+                        sortable: false
+                      },
+                      { field: "time", headerName: "Time", flex: 1, type: "number" },
                       {
                         field: "amount",
                         headerName: "Amount (€)",
                         flex: 1,
                         type: "number",
                         valueFormatter: (params) =>
-                          `€${Number(params.value).toFixed(2)}`
+                          typeof params.value === "number" && !isNaN(params.value)
+                            ? `€${params.value.toFixed(2)}`
+                            : "€0.00"
                       },
                       {
                         field: "risk",
@@ -146,7 +160,8 @@ function Dashboard() {
                       "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: "#2c5364",
                         color: "#fff",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        borderBottom: "1px solid #ccc"
                       },
                       "& .risk-high": {
                         color: "#d32f2f"
