@@ -139,6 +139,16 @@ function Dashboard() {
                       }
                     }}
                     onClick={() => document.getElementById("csvFileInput").click()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const file = e.dataTransfer.files[0];
+                      if (file && file.name.endsWith(".csv")) {
+                        setSelectedFile(file);
+                        setStats(null);
+                        setTransactions([]);
+                      }
+                    }}
                   >
                     <Box
                       sx={{
