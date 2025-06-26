@@ -1,14 +1,19 @@
 import sqlite3
-from datetime import datetime
 
 DB_PATH = "db/fraud.db"
 
 class Upload:
     def __init__(self, db_path=DB_PATH):
+        """
+        Initialisiert eine neue Instanz der Klasse Upload und stellt sicher, dass die benötigte Tabelle existiert.
+        """
         self.db_path = db_path
         self._ensure_tables()
 
     def _ensure_tables(self):
+        """
+        Erstellt die Tabelle 'uploads' in der SQLite-Datenbank, falls sie noch nicht existiert.
+        """
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         # Create uploads table if not exists
@@ -28,6 +33,17 @@ class Upload:
         conn.close()
 
     def insert_upload_stats(self, file_name, total_transactions, actual_fraud, predicted_fraud, fraud_percentage, total_amount):
+        """
+        Fügt einen neuen Eintrag mit Analyse-Metadaten in die Tabelle 'uploads' ein.
+
+        Parameter:
+            file_name (str): Name der hochgeladenen CSV-Datei.
+            total_transactions (int): Gesamtanzahl der Transaktionen.
+            actual_fraud (int): Tatsächliche Anzahl der Betrugsfälle.
+            predicted_fraud (int): Vom Modell vorhergesagte Anzahl der Betrugsfälle.
+            fraud_percentage (float): Prozentsatz der Betrugsfälle.
+            total_amount (float): Gesamtsumme aller Transaktionen.
+        """
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute("""
