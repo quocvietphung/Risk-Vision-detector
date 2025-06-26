@@ -8,6 +8,16 @@ class DatabaseInitializer:
         self.db_path = db_path
 
     def create_db_and_table(self):
+        """
+        Erstellt die SQLite-Datenbank und die erforderlichen Tabellen für die Anwendung.
+
+        Diese Methode erstellt das Verzeichnis für die Datenbankdatei (falls es nicht existiert),
+        entfernt die vorhandene Tabelle 'uploads' (falls vorhanden) und erstellt sie neu mit Feldern
+        zur Speicherung von Hochladeinformationen.
+
+        Rückgabe:
+            Keine. Die Methode erstellt die Datenbankdatei und die Tabelle.
+        """
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
