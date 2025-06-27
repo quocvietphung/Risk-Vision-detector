@@ -28,6 +28,7 @@ Abschlussprojekt/
 ├── db/                     # SQLite-Datenbank
 ├── model/                  # Modellklassen & Modelltraining
 ├── notebooks/              # Jupyter Notebooks für EDA & Modelltraining
+├── screenshots/            # Beispiel-Screenshots der Benutzeroberfläche
 ├── fraud-detection/        # Frontend-Quellcode (React + MUI)
 ├── requirements.txt        # Abhängigkeiten
 └── README.md               # Diese Datei
@@ -35,9 +36,19 @@ Abschlussprojekt/
 
 ## 🧪 Beispiel-Screenshots
 
-![Übersicht](screenshots/app_overview.png)
-![Upload](screenshots/upload_success.png)
-![Analyse](screenshots/analysis_results.png)
+Im Folgenden werden drei typische Anwendungsbilder dargestellt, die den Ablauf der Betrugserkennung illustrieren:
+
+1. **Startseite & Dashboard**  
+   Die moderne Benutzeroberfläche zeigt eine klare Struktur zum CSV-Upload und eine intuitive Analyseübersicht mit Diagrammen.  
+   ![Übersicht](screenshots/app_overview.png)
+
+2. **Erfolgreicher Datei-Upload**  
+   Nach dem Hochladen einer CSV-Datei sieht der Nutzer eine Bestätigung sowie die Option, die Analyse manuell mit einem Klick auf **"Start Analysis"** zu starten. Danach wird eine detaillierte Zusammenfassung der geladenen Transaktionen angezeigt.  
+   ![Upload](screenshots/upload_success.png)
+
+3. **Analyse-Ergebnisse mit Risikoeinschätzung**  
+   Die analysierten Transaktionen werden visuell dargestellt – inklusive Betrugsrate, vorhergesagten Betrugsfällen und einer Tabelle mit Risikoeinstufung.  
+   ![Analyse](screenshots/analysis_results.png)
 
 ## ⚙️ Installation
 
@@ -62,7 +73,3 @@ npm run dev
 ## 👤 Autor
 
 Quoc Viet Phung – Python Developer & AI Enthusiast
-
-## 📄 Lizenz
-
-MIT License
