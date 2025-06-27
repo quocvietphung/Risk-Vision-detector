@@ -39,7 +39,7 @@ Abschlussprojekt/
 Im Folgenden werden drei typische Anwendungsbilder dargestellt, die den Ablauf der Betrugserkennung illustrieren:
 
 1. **Startseite & Dashboard**  
-   Die moderne Benutzeroberfläche zeigt eine klare Struktur zum CSV-Upload und eine intuitive Analyseübersicht mit Diagrammen.  
+   Die moderne Benutzeroberfläche zeigt eine klare Struktur zum CSV-Upload.  
    ![Übersicht](screenshots/app_overview.png)
 
 2. **Erfolgreicher Datei-Upload**  
