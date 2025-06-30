@@ -1,23 +1,22 @@
 import Header from './components/Header'
-import UploadBox from './components/UploadBox'
-import StatsPanel from './components/StatsPanel'
-import ManualInput from './components/ManualInput'
-import ResultBox from './components/ResultBox'
-import DataTable from './components/DataTable'
 import Footer from './components/Footer'
+import Dashboard from "./components/Dashboard.jsx";
+import {Box} from "@mui/material";
 
 function App() {
   return (
-    <div style={{ fontFamily: "Inter, sans-serif", padding: 20 }}>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh'
+    }}>
       <Header />
-      <UploadBox />
-      <StatsPanel />
-      <ManualInput />
-      <ResultBox />
-      <DataTable />
+      <Box component="main" sx={{ flex: 1 }}>
+        <Dashboard />
+      </Box>
       <Footer />
-    </div>
-  )
+    </Box>
+  );
 }
 
 export default App

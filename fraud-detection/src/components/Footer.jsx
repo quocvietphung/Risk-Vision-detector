@@ -1,15 +1,30 @@
+import { Box, Typography, Link } from "@mui/material";
+
 function Footer() {
   const styles = {
-    footer: {
-      backgroundColor: "#f8f9fa",
-      padding: "10px",
-      textAlign: "center",
-      fontSize: "14px",
-      marginTop: "40px",
-      borderTop: "1px solid #ddd"
-    }
-  }
-  return <div style={styles.footer}>© 2025 - Fraud Detector App | GitHub | Contact | Docs</div>
+    backgroundColor: "#f8f9fa",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    borderTopColor: "#ddd",
+    marginTop: 64,
+    paddingTop: 16,
+    paddingBottom: 16,
+    textAlign: "center"
+  };
+
+  return (
+    <Box
+      component="footer"
+      style={styles}
+    >
+      <Typography variant="body2" color="text.secondary">
+        © 2025 - Fraud Detector App &nbsp;|&nbsp;
+        <Link href="#" underline="hover">GitHub</Link> &nbsp;|&nbsp;
+        <Link href="#" underline="hover">Contact</Link> &nbsp;|&nbsp;
+        <Link href="#" underline="hover">Docs</Link>
+      </Typography>
+    </Box>
+  );
 }
 
-export default Footer
+export default Footer;
